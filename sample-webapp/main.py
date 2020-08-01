@@ -71,7 +71,7 @@ def upload_photo():
             happyFace+=1
 
 
-    face_joy='There are '+str(happyFace)+" happy face in the photo."
+    face_joy=str(happyFace)
 
     # Create a Cloud Datastore client.
     datastore_client = datastore.Client()

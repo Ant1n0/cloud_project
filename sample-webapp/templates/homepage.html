@@ -12,9 +12,9 @@ Storage, Datastore, and the Cloud Vision API.</p>
       <input type="submit" name="submit" value="Submit">
     </form>
     {% for image_entity in image_entities %}
-      <img src="{{image_entity['image_public_url']}}" width=200 height=200>
+      <img src="{{image_entity['image_public_url']}}" width=400 height=400>
       <p>{{image_entity['blob_name']}} was uploaded {{image_entity['timestamp']}}.</p>
-      <p>Joy Likelihood for Face: {{image_entity['joy']}}</p>
+      <p>Total Number of Happy Face in This Photo is: {{image_entity['joy']}}</p>
     {% endfor %}
   </body>
 </html> 
