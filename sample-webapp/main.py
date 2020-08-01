@@ -47,17 +47,15 @@ def upload_photo():
     # Make the blob publicly viewable.
     blob.make_public()
 
-    # Create a Cloud Vision client.
     vision_client = vision.ImageAnnotatorClient()
 
-    # Use the Cloud Vision client to detect a face for our image.
     source_uri = 'gs://{}/{}'.format(CLOUD_STORAGE_BUCKET, blob.name)
+
     image = vision.types.Image(
         source=vision.types.ImageSource(gcs_image_uri=source_uri))
+
     faces = vision_client.face_detection(image).face_annotations
 
-    # If a face is detected, save to Datastore the likelihood that the face
-    # displays 'joy,' as determined by Google's Machine Learning algorithm.
     likelihoods = [
             'Unknown', 'Very Unlikely', 'Unlikely', 'Possible', 'Likely',
             'Very Likely']
@@ -80,24 +78,11 @@ def upload_photo():
     face_joy=str(happyFace)
     face_anger=str(angerFace)
     face_surprise=str(surpriseFace)
-
-    # Create a Cloud Datastore client.
     datastore_client = datastore.Client()
-
-    # Fetch the current date / time.
     current_datetime = datetime.now()
-
-    # The kind for the new entity.
     kind = 'Faces'
-
-    # The name/ID for the new entity.
     name = blob.name
-
-    # Create the Cloud Datastore key for the new entity.
     key = datastore_client.key(kind, name)
-
-    # Construct the new entity using the key. Set dictionary values for entity
-    # keys blob_name, storage_public_url, timestamp, and joy.
     entity = datastore.Entity(key)
     entity['blob_name'] = blob.name
     entity['image_public_url'] = blob.public_url
@@ -105,11 +90,7 @@ def upload_photo():
     entity['joy'] = face_joy
     entity['surprise']= face_surprise
     entity['anger']= face_anger
-
-    # Save the new entity to Datastore.
     datastore_client.put(entity)
-
-    # Redirect to the home page.
     return redirect('/')
 
 
@@ -123,6 +104,4 @@ def server_error(e):
 
 
 if __name__ == '__main__':
-    # This is used when running locally. Gunicorn is used to run the
-    # application on Google App Engine. See entrypoint in app.yaml.
     app.run(host='127.0.0.1', port=8080, debug=True)
