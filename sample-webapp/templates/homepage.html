@@ -1,4 +1,4 @@
-<h1>Google Cloud Platform - Face Detection Sample</h1>
+<h1>Google Cloud Platform - Number of Happy Angry Surprise Face</h1>
 
 <p>This Python Flask application demonstrates App Engine Flexible, Google Cloud
 Storage, Datastore, and the Cloud Vision API.</p>
@@ -12,9 +12,11 @@ Storage, Datastore, and the Cloud Vision API.</p>
       <input type="submit" name="submit" value="Submit">
     </form>
     {% for image_entity in image_entities %}
-      <img src="{{image_entity['image_public_url']}}" width=400 height=400>
+      <img src="{{image_entity['image_public_url']}}" width=300 height=200>
       <p>{{image_entity['blob_name']}} was uploaded {{image_entity['timestamp']}}.</p>
-      <p>Total Number of Happy Face in This Photo is: {{image_entity['joy']}}</p>
+      <p>Number of happy face in this pictures is: {{image_entity['joy']}}</p>
+      <p>Number of angry face in this pictures is: {{image_entity['anger']}}</p>
+      <p>Number of surprise face in this pictures is: {{image_entity['surprise']}}</p>
     {% endfor %}
   </body>
 </html> 
